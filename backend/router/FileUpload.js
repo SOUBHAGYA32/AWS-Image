@@ -12,9 +12,9 @@ const router = express.Router();
 const s3Client = new S3Client({
   region: process.env.REGION || "ap-south-1",
   credentials: {
-    accessKeyId: process.env.ACCESSKEYID || "AKIAXFALSUMY6VAASYOP",
+    accessKeyId: process.env.ACCESSKEYID,
     secretAccessKey:
-      process.env.SECRETACCESSKEY || "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",
+      process.env.SECRETACCESSKEY,
   },
 });
 
@@ -23,7 +23,7 @@ const upload = multer({ dest: "uploads/" });
 router.post("/uploadImage", upload.single("file"), async (req, res) => {
   const file = req.file;
   const command = new PutObjectCommand({
-    Bucket: process.env.BUCKET_NAME || "saubhagyadevelopment",
+    Bucket: process.env.BUCKET_NAME,
     Key: file.originalname,
     Body: file.buffer,
   });
@@ -43,7 +43,7 @@ router.post("/imageUrl", async (req, res) => {
   const key = req.body.key;
   console.log(key);
   const command = new GetObjectCommand({
-    Bucket:  process.env.BUCKET_NAME || "saubhagyadevelopment",
+    Bucket:  process.env.BUCKET_NAME,
     Key: key,
   });
   try {

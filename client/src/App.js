@@ -5,7 +5,6 @@ import axios from "axios";
 function App() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [uploadStatus, setUploadStatus] = useState("");
-  const [imageKey, setImageKey] = useState(null);
   const [imageUrl, setImageUrl] = useState(null)
 
   const handleImageChange = (event) => {
@@ -25,8 +24,6 @@ function App() {
             },
           })
           .then((res) => {
-            console.log(res);
-            localStorage.setItem("key", res.data.key);
             setImageUrl(res.data.url)
           })
           .catch((err) => {

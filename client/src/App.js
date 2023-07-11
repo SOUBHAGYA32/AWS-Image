@@ -6,6 +6,7 @@ function App() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [uploadStatus, setUploadStatus] = useState("");
   const [imageKey, setImageKey] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null)
 
   const handleImageChange = (event) => {
     setSelectedImage(event.target.files[0]);
@@ -26,7 +27,7 @@ function App() {
           .then((res) => {
             console.log(res);
             localStorage.setItem("key", res.data.key);
-            getImageUrl();
+            setImageUrl(res.data.url)
           })
           .catch((err) => {
             console.log(err);
@@ -39,24 +40,6 @@ function App() {
     }
   };
 
-  const getImageUrl = async () => {
-    try {
-      const key = localStorage.getItem("key");
-      await axios
-        .post("api/v1/imageUrl", {
-          key: key,
-        })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <div className="App">
       <div>
@@ -66,6 +49,10 @@ function App() {
           <button type="submit">Upload</button>
         </form>
         {uploadStatus && <p>{uploadStatus}</p>}
+      </div>
+      <div>
+        <h1>Image Display</h1>
+        <img src={imageUrl} alt="Displayed Image" />
       </div>
     </div>
   );
